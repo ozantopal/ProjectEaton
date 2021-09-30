@@ -1,0 +1,47 @@
+version: "3.9"
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123456
+    image: rabbitmq:3-management
+
+  mongodb:
+    image: docker.io/bitnami/mongodb:4.4
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+
+  measurementunit:
+    image: ${DOCKER_REGISTRY-}measurementunit
+    build:
+      context: .
+      dockerfile: src/OT.ProjectEaton.MeasurementUnit.Emulator/Dockerfile
+
+  datacollector:
+    image: ${DOCKER_REGISTRY-}datacollector
+    build:
+      context: .
+      dockerfile: src/OT.ProjectEaton.DataCollector/Dockerfile
+
+  centralresultunit:
+    image: ${DOCKER_REGISTRY-}centralresultunit
+    ports:
+      - 8080:80
+    build:
+      context: .
+      dockerfile: src/OT.ProjectEaton.CentralResultUnit/Dockerfile
+
+volumes:
+  mongodb_data:
+    driver: local

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OT.ProjectEaton.DataCollector": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

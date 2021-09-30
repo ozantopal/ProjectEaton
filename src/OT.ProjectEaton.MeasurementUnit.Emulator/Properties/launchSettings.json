@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OT.ProjectEaton.MeasurementUnit.Emulator": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
